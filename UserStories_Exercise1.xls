@@ -1,0 +1,41 @@
+Test ID	API Endpoint	Test Name	Test Steps	Test Data	Expected Result	Observation
+1	GET `/persons/{person_id}`	Retrieve person data				
+1.1			Call endpoint with valid id	id:b9f2d28c-57dc-4381-a752-ac36611ab51a	"- Response received with status code 200.
+- Retreived id matches specified id.
+- Retreived first name matches expected first name ""Arnold""
+- Retreived last name matches expected last name ""Schwarzenegger""
+- Retreived birth year matches expected borth year ""1947"""	
+1.2			Call endpoint with invalid id	id:ac36611ab51a-b9f2d28c-57dc-4381-a752	"- Response received with status code 404.
+- Response received with message ""No persons found"""	
+1.3			Call endpoint without an id	N/A	"- Response received with status code 200.
+- Retreived response matches the full person database ""person.json"""	
+2	POST `/persons/{person_id}`					
+2.1			"Call endpoint with request body containing first_name, last_name and birth_year"	"first_name: George
+last_name: Clooney
+birth_year: 1973"	"- Response received with status code 201
+- Response first_name matches the first_name submitted in request body
+- Response last_name matches the last_name submitted in request body
+- Response birth_year matches the borth_year submitted in request body"	
+2.2			Call endpoint with request body containing no value for first_name	"last_name: Clooney
+birth_year: 1973"	"- Response received with status_code 400
+- Response recived with message ""Missing required field first_name"""	
+2.3			Call endpoint with request body containing no value for last_name	"first_name: George
+birth_year: 1973"	"- Response received with status_code 400
+- Response recived with message ""Missing required field last_name"""	
+2.4			Call endpoint with request body containing no value for birth_year	"first_name: George
+last_name: Clooney"	"- Response received with status_code 400
+- Response recived with message ""Missing required field birth_year"""	
+2.5			Call endpoint with request body containing no fields	N/A	"- Response received with status_code 400
+- Response received with message ""Missing required field first_name"""	
+	PUT `/persons/{person_id}`					
+3.1			"Call endpoint with valid id and request body with updated values for first_name, last_name and birth_year"	id :  test_id[0]	"- Response received with status code 200.
+- person database is updated"	
+3.2			"Call endpoint with invalid id and request body with updated values for first_name, last_name and birth_year"	invalid id	"- Response received with status code 201.
+- person database is not updated"	
+3.3			Call endpoint with invalid id and request body with updated value for first_name only	invalid id or non exisitng id	"- Response received with status code 400.
+- person database is not updated"	Like wise I can test for last name and birth year
+	DELETE `/persons/{person_id}`				Persons	
+4.1			Call endpoing with a valid id		"- Response received with status_code 200
+- Response received with message ""Person successfully deleted"""	
+4.2			Call endpoint with an invalid id		"- Response received with status_code 404
+- Response received with message ""Person not found"""	
